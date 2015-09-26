@@ -23,7 +23,6 @@ brooklyn.catalog:
     - id: zeppelin-server
       name: Zeppelin Server
       description: A web-based notebook that enables interactive data analytics
-      iconUrl: http://1.bp.blogspot.com/-YO2oRVpyzIk/VdIqwY5rCkI/AAAAAAAAAfI/RFr-iwRimbQ/s1600/zeppelin-bl.png
       maintainer_name: Mike Zaccardo
       maintainer_email: mike.zaccardo@cloudsoftcorp.com
       item:
@@ -32,7 +31,7 @@ brooklyn.catalog:
         provisioning.properties:
             osFamily: ubuntu
         
-        post.install.command: |
+        install.command: |
             # Install prerequisites
             sudo apt-get update -y
             sudo apt-get install -y openjdk-7-jdk git npm
@@ -45,7 +44,6 @@ brooklyn.catalog:
             export PATH=/usr/local/apache-maven-3.1.0/bin:$PATH
 
             # Clone Zeppelin
-            cd ~
             git clone https://github.com/apache/incubator-zeppelin
             cd incubator-zeppelin
             
@@ -53,10 +51,10 @@ brooklyn.catalog:
             mvn install -DskipTests
         
         launch.command: |
-            ~/incubator-zeppelin/bin/zeppelin-daemon.sh start
+            incubator-zeppelin/bin/zeppelin-daemon.sh start
         
         checkRunning.command: |
-            ~/incubator-zeppelin/bin/zeppelin-daemon.sh status
+            incubator-zeppelin/bin/zeppelin-daemon.sh status
         
         stop.command: |
-            ~/incubator-zeppelin/bin/zeppelin-daemon.sh stop
+            incubator-zeppelin/bin/zeppelin-daemon.sh stop
