@@ -31,6 +31,9 @@ brooklyn.catalog:
         provisioning.properties:
             osFamily: ubuntu
         
+        shell.env:
+            INSTALL_DIR: $brooklyn:attributeWhenReady("install.dir")
+
         install.command: |
             # Install prerequisites
             sudo apt-get update -y
@@ -48,13 +51,13 @@ brooklyn.catalog:
             cd incubator-zeppelin
             
             # Build Zeppelin            
-            mvn install -DskipTests
-        
+            mvn clean package -DskipTests
+
         launch.command: |
-            incubator-zeppelin/bin/zeppelin-daemon.sh start
-        
+            $INSTALL_DIR/incubator-zeppelin/bin/zeppelin-daemon.sh start
+
         checkRunning.command: |
-            incubator-zeppelin/bin/zeppelin-daemon.sh status
+            $INSTALL_DIR/incubator-zeppelin/bin/zeppelin-daemon.sh status
         
         stop.command: |
-            incubator-zeppelin/bin/zeppelin-daemon.sh stop
+            $INSTALL_DIR/incubator-zeppelin/bin/zeppelin-daemon.sh stop
